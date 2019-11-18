@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../product.service';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../product';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-productedit',
@@ -14,7 +15,8 @@ export class ProducteditComponent implements OnInit {
   product: Product = new Product();
 
   pid: number;
-  constructor(private formBuilder: FormBuilder, private service: ProductService,private route:ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private service: ProductService,private route:ActivatedRoute,
+    private toastr:ToastrService) { }
 
   ngOnInit() {
     
@@ -52,6 +54,7 @@ updateProduct()
     this.product.productdate=this.productform.controls.productdate.value;
     this.product.productprice=this.productform.controls.productprice.value;
     this.service.updateProduct(this.pid,this.product).subscribe(res=>{
+      this.toastr.success('Updated Successfully..!!', 'Success');
       this.ngOnInit();
     });
   }

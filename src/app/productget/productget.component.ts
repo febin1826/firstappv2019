@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-productget',
@@ -13,7 +14,7 @@ export class ProductgetComponent implements OnInit {
   product: Observable<Product>;
   products: Observable<Product[]>;
 
-  constructor(private productService: ProductService,
+  constructor(private productService: ProductService,private toastr:ToastrService,
     private router: Router) { }
 
   ngOnInit() {
@@ -27,6 +28,7 @@ export class ProductgetComponent implements OnInit {
     if(confirm('Do you want to delete this record?'))
     {
       this.productService.deleteProduct(id).subscribe(data=>{
+        this.toastr.success('Deleted Successfully..!!', 'Success');
         console.log(data);
       })
     }

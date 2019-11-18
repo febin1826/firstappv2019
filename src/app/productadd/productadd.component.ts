@@ -4,6 +4,7 @@ import { ProductService } from '../product.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { observable, Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-productadd',
@@ -14,7 +15,8 @@ export class ProductaddComponent implements OnInit {
   productForm: FormGroup;
   product: Product = new Product();
   id: number;
-  constructor(private formBuilder: FormBuilder, private service: ProductService,private route:ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private service: ProductService,private route:ActivatedRoute,
+              private toastr:ToastrService) { }
  
   ngOnInit() {
     
@@ -32,6 +34,7 @@ export class ProductaddComponent implements OnInit {
     this.product.productprice = this.productForm.controls.productprice.value;
     this.product.productdate = this.productForm.controls.productdate.value;
     this.service.addProduct(this.product).subscribe();
+    this.toastr.success('Added Successfully..!!', 'Success');
     this.ngOnInit();
   }
 
